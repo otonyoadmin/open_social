@@ -1,0 +1,6 @@
+social_content_export.export_content_confirm:
+  title: Content Exporter
+  description: 'Export content to CSV'
+  parant: system.admin_content
+  route_name: social_content_export.export_content_confirm
+  weight: 0
