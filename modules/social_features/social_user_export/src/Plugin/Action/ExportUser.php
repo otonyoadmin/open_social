@@ -32,7 +32,7 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $currentUser;
+  protected $current_user;
 
   /**
    * Apply for all.
@@ -63,7 +63,7 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    *   Current user.
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user) {
-    $this->currentUser = $current_user;
+    $this->current_user = $current_user;
     $this->tempStoreFactory = $temp_store_factory;
 
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -87,13 +87,13 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    */
   public function executeMultiple(array $entities) {
     if ($this->applyAll) {
-      $this->tempStoreFactory->get('user_operations_export')->set($this->currentUser->id(), [
+      $this->tempStoreFactory->get('user_operations_export')->set($this->current_user->id(), [
         'apply_all' => TRUE,
         'query' => $this->query,
       ]);
     }
     else {
-      $this->tempStoreFactory->get('user_operations_export')->set($this->currentUser->id(), [
+      $this->tempStoreFactory->get('user_operations_export')->set($this->current_user->id(), [
         'entities' => $entities,
       ]);
     }

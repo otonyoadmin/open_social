@@ -34,6 +34,9 @@ class ExportUser {
       $headers = [
         t('ID'),
         t('UUID'),
+        t('FirstName'),
+        t('LastName'),
+        t("username"),
         t('Email'),
         t('Last login'),
         t('Last access'),
@@ -79,6 +82,9 @@ class ExportUser {
     $csv->insertOne([
       $entity->id(),
       $entity->uuid(),
+      social_user_export_first_name($entity),
+      social_user_export_last_name($entity),
+      social_user_export_user_name($entity),
       $entity->getEmail(),
       $last_login,
       $last_access,
