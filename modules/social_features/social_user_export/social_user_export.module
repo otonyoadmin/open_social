@@ -86,13 +86,15 @@ function _social_user_export_get_view(array $query = [], $execute = TRUE) {
 }
 
 /**
- * @param UserInterface $account
- * @return mixed
+ * @param \Drupal\user\UserInterface $account
+ *   The account to get the data for.
  *
+ * @return mixed
+ *   The username of the user.
  */
 function social_user_export_user_name(UserInterface $account) {
   $query = \Drupal::database()->select('users_field_data', 'ufd');
-  $query->addField('ufd','name');
+  $query->addField('ufd', 'name');
   $query->condition('ufd.uid', $account->id());
 
   return $query
@@ -101,13 +103,16 @@ function social_user_export_user_name(UserInterface $account) {
 }
 
 /**
- * @param UserInterface $account
- * @return mixed
+ * @param \Drupal\user\UserInterface $account
+ *   The account to get the data for.
+ *
+ * @return string
+ *   First name of the use.
  */
 function social_user_export_first_name(UserInterface $account) {
   $query = \Drupal::database()->select('profile__field_profile_first_name', 'pfn');
-  $query->addField('pfn','field_profile_first_name_value');
-  $query->join('profile','p', 'p.revision_id = pfn.revision_id');
+  $query->addField('pfn', 'field_profile_first_name_value');
+  $query->join('profile', 'p', 'p.revision_id = pfn.revision_id');
   $query->condition('p.uid', $account->id());
 
   return $query
@@ -115,6 +120,13 @@ function social_user_export_first_name(UserInterface $account) {
     ->fetchField();
 }
 
+/**
+ * @param \Drupal\user\UserInterface $account
+ *   The account to get the data for.
+ *
+ * @return string
+ *   LastName of the user.
+ */
 function social_user_export_last_name(UserInterface $account) {
   $query = \Drupal::database()->select('profile__field_profile_last_name','pln');
   $query->addField("pln", 'field_profile_last_name_value');
@@ -125,6 +137,7 @@ function social_user_export_last_name(UserInterface $account) {
     ->execute()
     ->fetchField();
 }
+
 /**
  * Returns quantity of comments posted by specific user.
  *
