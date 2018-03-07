@@ -86,6 +86,8 @@ function _social_user_export_get_view(array $query = [], $execute = TRUE) {
 }
 
 /**
+ * Returns username of user.
+ *
  * @param \Drupal\user\UserInterface $account
  *   The account to get the data for.
  *
@@ -103,6 +105,7 @@ function social_user_export_user_name(UserInterface $account) {
 }
 
 /**
+ * Returns first name of user.
  * @param \Drupal\user\UserInterface $account
  *   The account to get the data for.
  *
@@ -121,6 +124,8 @@ function social_user_export_first_name(UserInterface $account) {
 }
 
 /**
+ * Returns LastName of user.
+ *
  * @param \Drupal\user\UserInterface $account
  *   The account to get the data for.
  *
@@ -128,7 +133,7 @@ function social_user_export_first_name(UserInterface $account) {
  *   LastName of the user.
  */
 function social_user_export_last_name(UserInterface $account) {
-  $query = \Drupal::database()->select('profile__field_profile_last_name','pln');
+  $query = \Drupal::database()->select('profile__field_profile_last_name', 'pln');
   $query->addField("pln", 'field_profile_last_name_value');
   $query->join('profile', 'p', 'p.revision_id = pln.revision_id');
   $query->condition('p.uid', $account->id());

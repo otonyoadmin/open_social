@@ -48,19 +48,20 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    */
   protected $query = [];
 
-    /**
-     * Constructs a ExportUser object.
-     *
-     * @param array $configuration
-     *   A configuration array containing information about the plugin instance.
-     * @param string $plugin_id
-     *   The plugin ID for the plugin instance.
-     * @param mixed $plugin_definition
-     *   The plugin implementation definition.
-     * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
-     *   The tempstore factory.
-     * @param AccountInterface $currentUser
-     */
+  /**
+   * Constructs a ExportUser object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
+   *   The tempstore factory.
+   * @param \Drupal\Core\Session\AccountInterface $currentUser
+   *   The current user
+   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, PrivateTempStoreFactory $temp_store_factory, AccountInterface $currentUser) {
     $this->currentUser = $currentUser;
     $this->tempStoreFactory = $temp_store_factory;
