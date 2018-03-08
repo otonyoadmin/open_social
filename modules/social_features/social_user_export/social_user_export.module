@@ -106,6 +106,7 @@ function social_user_export_user_name(UserInterface $account) {
 
 /**
  * Returns first name of user.
+ *
  * @param \Drupal\user\UserInterface $account
  *   The account to get the data for.
  *
