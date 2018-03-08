@@ -2,13 +2,11 @@
 
 namespace Drupal\social_content_export;
 
-
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\user\PrivateTempStoreFactory;
 use League\Csv\Writer;
-use Drupal\social_content_export\Form\ExportContentConfirm;
 
 class ExportContent extends  PrivateTempStoreFactory{
 

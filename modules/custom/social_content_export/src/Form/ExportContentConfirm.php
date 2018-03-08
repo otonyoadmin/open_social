@@ -1,22 +1,18 @@
 <?php
 
-
 namespace Drupal\social_content_export\Form;
-
 
 use Drupal\Core\Entity\EntityManagerInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
-use Drupal\social_content_export\Plugin\Action\ExportContent;
-use Drupal\user\Entity\User;
 use Drupal\user\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Provides Content export confirm
+ * Provides Content export confirm.
  *
  * Class ExportContentConfirm
  * @package Drupal\social_content_export\Form
