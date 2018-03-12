@@ -8,69 +8,66 @@ use Drupal\Core\Url;
 use Drupal\user\PrivateTempStoreFactory;
 use League\Csv\Writer;
 
-class ExportContent extends  PrivateTempStoreFactory{
+/**
+ * Class ExportContent.
+ *
+ * @package Drupal\social_content_export
+ */
+class ExportContent extends  PrivateTempStoreFactory {
 
  /**
   * Callback of one operation.
   *
-  * @param ContentEntityInterface $entity
+  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+  *   ContentInterface entity.
   * @param array $context
   *   Context of the operation.
-  * @param PrivateTempStoreFactory $privateTempStoreFactory
   */
+  public static function exportContentOperation(ContentEntityInterface $entity, array &$context) {
+    $bundle = $entity->bundle();
+    switch ($bundle) {
+      case 'event':
+        if (empty($context['results']['file_path'])) {
+          $context['results']['file_path'] = self::getFileTemporaryPath();
+          $csv = Writer::createFromPath($context['results']['file_path'], 'w');
+          $csv->setDelimiter(',');
+          $csv->setEnclosure('"');
+          $csv->setEscape('\\');
 
- /**
-  * The TemporaryStore
-  * @var PrivateTempStoreFactory $privateTempStoreFactory
-  */
-  protected $privateTempStoreFactory;
-
-public static function exportContentOperation(ContentEntityInterface $entity, array &$context) {
-  $bundle = $entity->bundle();
-  switch ($bundle) {
-    case 'event':
-      if (empty($context['results']['file_path'])) {
-        $context['results']['file_path'] = self::getFileTemporaryPath();
-        $csv = Writer::createFromPath($context['results']['file_path'], 'w');
-        $csv->setDelimiter(',');
-        $csv->setEnclosure('"');
-        $csv->setEscape('\\');
-
-        // Append header.
-        $headers = [
-          t('Event Name'),
-          t('Location'),
-          t('EventHost'),
-          t('Event Organizer'),
-          t("Enrolled Participants"),
-        ];
-        $csv->insertOne($headers);
-      } else {
+          // Append header.
+          $headers = [
+            t('Event Name'),
+            t('Location'),
+            t('EventHost'),
+            t('Event Organizer'),
+            t("Enrolled Participants"),
+          ];
+          $csv->insertOne($headers);
+        } else {
           $csv = Writer::createFromPath($context['results']['file_path'], 'a');
-       }
+        }
 
-      // Add formatter.
-      $encoder = \Drupal::service('csv_serialization.encoder.csv');
-      $csv->addFormatter([$encoder, 'formatRow']);
+        // Add formatter.
+        $encoder = \Drupal::service('csv_serialization.encoder.csv');
+        $csv->addFormatter([$encoder, 'formatRow']);
 
-      // Add row.
-      $csv->insertOne([
-        social_content_export_event_title($entity),
-        social_content_export_event_location($entity),
-        social_content_export_event_host($entity),
-        social_content_export_event_participant($entity),
-        social_content_export_event_organizer($entity),
-      ]);
-      break;
-    case 'topic':
-      drupal_set_message('Not yet for topics');
-      break;
-    case 'article':
-      drupal_set_message('Not yet for articles');
-      break;
+        // Add row.
+        $csv->insertOne([
+          social_content_export_event_title($entity),
+          social_content_export_event_location($entity),
+          social_content_export_event_host($entity),
+          social_content_export_event_participant($entity),
+          social_content_export_event_organizer($entity),
+        ]);
+        break;
+      case 'topic':
+        drupal_set_message('Not yet for topics');
+        break;
+      case 'article':
+        drupal_set_message('Not yet for articles');
+        break;
+    }
   }
-
-}
 
  /**
   * Callback when batch is complete.
@@ -94,27 +91,28 @@ public static function exportContentOperation(ContentEntityInterface $entity, ar
         drupal_set_message(t('Export is complete. @link', [
             '@link' => $link->toString(),
         ]));
+      }
+      else {
+      drupal_set_message('When saving the file an error occurred', 'error');
+      }
     }
     else {
-      drupal_set_message('When saving the file an error occurred', 'error');
-    }
-}
-  else {
     drupal_set_message('An error occurred', 'error');
+    }
   }
-}
 
-/**
- * Returns unique file path.
- *
- * @return string
- *   The path to the file.
- */
-public static function getFileTemporaryPath() {
-  $hash = md5(microtime(TRUE));
-  $filename = 'export-contents-' . substr($hash, 20, 12) . '.csv';
-  $file_path = file_directory_temp() . '/' . $filename;
+ /**
+  * Returns unique file path.
+  *
+  * @return string
+  *   The path to the file.
+  */
+  public static function getFileTemporaryPath() {
+    $hash = md5(microtime(TRUE));
+    $filename = 'export-contents-' . substr($hash, 20, 12) . '.csv';
+    $file_path = file_directory_temp() . '/' . $filename;
 
-  return $file_path;
+    return $file_path;
   }
+
 }

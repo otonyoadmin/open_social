@@ -81,7 +81,7 @@ function social_content_export_event_title(ContentEntityInterface $entity) {
  *   The entity to look for data to export.
  *
  * @return mixed
- *  Return event organizer.
+ *   Return event organizer.
  */
 function social_content_export_event_organizer(ContentEntityInterface $entity) {
   $query = \Drupal::database()->select('event_enrollment_field_data', 'eo');
@@ -103,7 +103,7 @@ function social_content_export_file_download($uri) {
 
   if ($scheme == 'private' && preg_match('/^csv\/export-content-([a-f0-9]{12})\.csv$/i', $target) && $access) {
     return [
-        'Content-disposition' => 'attachment; filename="' . basename($target) . '"',
+      'Content-disposition' => 'attachment; filename="' . basename($target) . '"',
     ];
   }
 }
