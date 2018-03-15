@@ -13,16 +13,16 @@ use League\Csv\Writer;
  *
  * @package Drupal\social_content_export
  */
-class ExportContent extends  PrivateTempStoreFactory {
+class ExportContent extends PrivateTempStoreFactory {
 
- /**
-  * Callback of one operation.
-  *
-  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
-  *   ContentInterface entity.
-  * @param array $context
-  *   Context of the operation.
-  */
+  /**
+   * Callback of one operation.
+   *
+   * @param \Drupal\Core\Entity\ContentEntityInterface $entity
+   *   ContentInterface entity.
+   * @param array $context
+   *   Context of the operation.
+   */
   public static function exportContentOperation(ContentEntityInterface $entity, array &$context) {
     $bundle = $entity->bundle();
     switch ($bundle) {
@@ -43,7 +43,8 @@ class ExportContent extends  PrivateTempStoreFactory {
             t("Enrolled Participants"),
           ];
           $csv->insertOne($headers);
-        } else {
+        }
+        else {
           $csv = Writer::createFromPath($context['results']['file_path'], 'a');
         }
 
@@ -60,25 +61,27 @@ class ExportContent extends  PrivateTempStoreFactory {
           social_content_export_event_organizer($entity),
         ]);
         break;
+
       case 'topic':
         drupal_set_message('Not yet for topics');
         break;
+
       case 'article':
         drupal_set_message('Not yet for articles');
         break;
     }
   }
 
- /**
-  * Callback when batch is complete.
-  *
-  * @param bool $success
-  *   Boolean to indicate success of the batch.
-  * @param array $results
-  *   The results.
-  * @param array $operations
-  *   Operations that the batch performed.
-  */
+  /**
+   * Callback when batch is complete.
+   *
+   * @param bool $success
+   *   Boolean to indicate success of the batch.
+   * @param array $results
+   *   The results.
+   * @param array $operations
+   *   Operations that the batch performed.
+   */
   public static function finishedCallback($success, array $results, array $operations) {
     if ($success && !empty($results['file_path'])) {
       $data = @file_get_contents($results['file_path']);
@@ -89,24 +92,24 @@ class ExportContent extends  PrivateTempStoreFactory {
         $url = Url::fromUri(file_create_url($path . '/' . $name));
         $link = Link::fromTextAndUrl(t('Download file'), $url);
         drupal_set_message(t('Export is complete. @link', [
-            '@link' => $link->toString(),
+          '@link' => $link->toString(),
         ]));
       }
       else {
-      drupal_set_message('When saving the file an error occurred', 'error');
+        drupal_set_message('When saving the file an error occurred', 'error');
       }
     }
     else {
-    drupal_set_message('An error occurred', 'error');
+      drupal_set_message('An error occurred', 'error');
     }
   }
 
- /**
-  * Returns unique file path.
-  *
-  * @return string
-  *   The path to the file.
-  */
+  /**
+   * Returns unique file path.
+   *
+   * @return string
+   *   The path to the file.
+   */
   public static function getFileTemporaryPath() {
     $hash = md5(microtime(TRUE));
     $filename = 'export-contents-' . substr($hash, 20, 12) . '.csv';

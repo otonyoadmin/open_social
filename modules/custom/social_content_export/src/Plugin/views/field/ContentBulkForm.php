@@ -1,23 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: femke
- * Date: 28/02/2018
- * Time: 22:43
- */
 
 namespace Drupal\social_content_export\Plugin\views\field;
-
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\Plugin\views\field\NodeBulkForm;
 
 /**
- * Defines user operations bulk form
+ * Defines user operations bulk form.
  *
  * @ViewsField("social_content_export_bulk_form")
  */
 class ContentBulkForm extends NodeBulkForm {
+
   /**
    * {@inheritdoc}
    */
@@ -44,26 +38,27 @@ class ContentBulkForm extends NodeBulkForm {
         $count++;
 
         $entities[$bulk_form_key] = $entity;
-    }
+      }
 
-    $action->execute($entities);
+      $action->execute($entities);
 
-    $operation_definition = $action->getPluginDefinition();
-    if (!empty($operation_definition['confirm_form_route_name'])) {
-      $options = [
-        'query' => $this->getDestinationArray(),
-      ];
-      $form_state->setRedirect($operation_definition['confirm_form_route_name'], [], $options);
-    }
-    else {
-      // Don't display the message unless there are some elements affected and
-      // there is no confirmation form.
-      if ($count) {
-        drupal_set_message($this->formatPlural($count, '%action was applied to @count item.', '%action was applied to @count items.', [
+      $operation_definition = $action->getPluginDefinition();
+      if (!empty($operation_definition['confirm_form_route_name'])) {
+        $options = [
+          'query' => $this->getDestinationArray(),
+        ];
+        $form_state->setRedirect($operation_definition['confirm_form_route_name'], [], $options);
+      }
+      else {
+        // Don't display the message unless there are some elements affected and
+        // there is no confirmation form.
+        if ($count) {
+          drupal_set_message($this->formatPlural($count, '%action was applied to @count item.', '%action was applied to @count items.', [
             '%action' => $action->label(),
-        ]));
+          ]));
+        }
       }
     }
-    }
   }
+
 }

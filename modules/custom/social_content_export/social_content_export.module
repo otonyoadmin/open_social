@@ -9,6 +9,8 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\views\Views;
 
 /**
+ * Returns event location.
+ *
  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
  *   The entity to look for data to export.
  *
@@ -26,6 +28,8 @@ function social_content_export_event_location(ContentEntityInterface $entity) {
 }
 
 /**
+ * Returns event host.
+ *
  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
  *   The entity to look for data to export.
  *
@@ -43,6 +47,8 @@ function social_content_export_event_host(ContentEntityInterface $entity) {
 }
 
 /**
+ * Returns participant.
+ *
  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
  *   The entity to look for data to export.
  *
@@ -60,6 +66,8 @@ function social_content_export_event_participant(ContentEntityInterface $entity)
 }
 
 /**
+ * Returns event title.
+ *
  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
  *   The entity to look for data to export.
  *
@@ -77,6 +85,8 @@ function social_content_export_event_title(ContentEntityInterface $entity) {
 }
 
 /**
+ * Returns event organizer.
+ *
  * @param \Drupal\Core\Entity\ContentEntityInterface $entity
  *   The entity to look for data to export.
  *

@@ -8,7 +8,6 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\user\PrivateTempStoreFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 /**
  * Exports content to CSV.
  *
@@ -21,56 +20,56 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ExportContent extends ActionBase implements ContainerFactoryPluginInterface {
   /**
-  * The tempstore object.
-  *
-  * @var \Drupal\user\PrivateTempStoreFactory
-  */
+   * The tempstore object.
+   *
+   * @var \Drupal\user\PrivateTempStoreFactory
+   */
   protected $tempStore;
 
   /**
-  * The current user.
-  *
-  * @var \Drupal\Core\Session\AccountInterface
-  */
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
  protected $currentUser;
 
   /**
-  * Apply for all.
-  *
- * @var bool
- */
+   * Apply for all.
+   *
+  * @var bool
+  */
  protected $applyAll;
 
   /**
-  * The query.
-  *
-  * @var array
-  */
+   * The query.
+   *
+   * @var array
+   */
   protected $query = [];
   /**
-  * Constructs a new ExportContent object.
-  *
-  * @param array $configuration
-  *   A configuration array containing information about the plugin instance.
-  * @param string $plugin_id
-  *   The plugin ID for the plugin instance.
-  * @param mixed $plugin_definition
-  *   The plugin implementation definition.
-  * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
-  *   The tempstore factory.
-  * @param \Drupal\Core\Session\AccountInterface $current_user
-  *   Current user.
-  */
+   * Constructs a new ExportContent object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin ID for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\user\PrivateTempStoreFactory $temp_store_factory
+   *   The tempstore factory.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   Current user.
+   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user) {
     $this->currentUser = $current_user;
     $this->tempStore = $temp_store_factory;
 
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-}
+  }
 
   /**
-  * {@inheritdoc}
-  */
+   * {@inheritdoc}
+   */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
     $configuration,
@@ -81,48 +80,49 @@ class ExportContent extends ActionBase implements ContainerFactoryPluginInterfac
     );
   }
 
-/**
- * {@inheritdoc}
- */
+  /**
+   * {@inheritdoc}
+   */
   public function executeMultiple(array $entities) {
     $this->tempStore->get('export_content_confirm')->set($this->currentUser->id(), [
       'entities' => $entities,
-      'query' => $this->query
+      'query' => $this->query,
     ]);
   }
 
-/**
- * {@inheritdoc}
- */
+  /**
+   * {@inheritdoc}
+   */
   public function execute($object = NULL) {
     $this->executeMultiple([$object]);
   }
 
-/**
- * {@inheritdoc}
- */
+  /**
+   * {@inheritdoc}
+   */
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
     /** @var \Drupal\node\NodeInterface $object */
     return $object->access('view', $account, $return_as_object);
   }
 
-/**
- * Set the apply_all property.
- *
- * @param bool $applyAll
- *   Boolean that determines if this applies for all or not.
- */
+  /**
+   * Set the apply_all property.
+   *
+   * @param bool $applyAll
+   *   Boolean that determines if this applies for all or not.
+   */
   public function setApplyAll($applyAll) {
     $this->applyAll = $applyAll;
   }
 
-/**
- * Set the query property.
- *
- * @param array $query
- *   An array with query properties.
- */
+  /**
+   * Set the query property.
+   *
+   * @param array $query
+   *   An array with query properties.
+   */
   public function setQuery(array $query) {
     $this->query = $query;
   }
+
 }
