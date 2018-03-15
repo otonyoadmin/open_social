@@ -12,11 +12,10 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Provides Content export confirm.
+ * Class ExportContentConfirm.
  *
  * @package Drupal\social_content_export\Form
  */
-
 class ExportContentConfirm extends ConfirmFormBase {
 
   /**
@@ -40,6 +39,7 @@ class ExportContentConfirm extends ConfirmFormBase {
    *   The tempstore factory.
    * @param \Drupal\Core\Entity\EntityManagerInterface $manager
    *   The entity manager.
+   *
    * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
    */
   public function __construct(PrivateTempStoreFactory $temp_store_factory, EntityManagerInterface $manager) {
