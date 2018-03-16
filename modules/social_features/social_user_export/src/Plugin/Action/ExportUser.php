@@ -87,13 +87,13 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    */
   public function executeMultiple(array $entities) {
     if ($this->applyAll) {
-      $this->tempStoreFactory->get('user_operations_export')->set($this->current_user->id(), [
+      $this->tempStoreFactory->get('user_operations_export')->set($this->currentUser->id(), [
         'apply_all' => TRUE,
         'query' => $this->query,
       ]);
     }
     else {
-      $this->tempStoreFactory->get('user_operations_export')->set($this->current_user->id(), [
+      $this->tempStoreFactory->get('user_operations_export')->set($this->currentUser->id(), [
         'entities' => $entities,
       ]);
     }
