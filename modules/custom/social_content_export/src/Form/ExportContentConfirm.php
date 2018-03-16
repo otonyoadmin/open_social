@@ -89,7 +89,7 @@ class ExportContentConfirm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    // Retrieve the data to be exported from temp store
+    // Retrieve the data to be exported from temp store.
     $data = $this->tempStoreFactory->get('export_content_confirm')->get($this->currentUser()->id());
     if (empty($data)) {
       return new RedirectResponse($this->getCancelUrl()->setAbsolute()->toString());
@@ -105,10 +105,10 @@ class ExportContentConfirm extends ConfirmFormBase {
     ];
     foreach ($data['entities'] as $node) {
       $export_params['entities'][] = $node->id();
-      $form['entities'][] = array(
+      $form['entities'][] = [
         '#type' => 'markup',
         '#markup' => '<li>' . $node->getTitle() . '</li>',
-      );
+      ];
     }
     $export_params['query'] = $data['query'];
     $content_number = count($data['entities']);
@@ -130,7 +130,7 @@ class ExportContentConfirm extends ConfirmFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $export_params = $form_state->get('export_params');
-    $batch = array();
+    $batch = [];
     if ($form_state->getValue('confirm')) {
       $batch = [
         'title' => t('Exporting contents'),
@@ -148,7 +148,7 @@ class ExportContentConfirm extends ConfirmFormBase {
           'exportContentOperation',
         ],
         [
-          Node::load($nid)
+          Node::load($nid),
         ],
       ];
     }

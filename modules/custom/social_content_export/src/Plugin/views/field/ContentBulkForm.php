@@ -32,7 +32,7 @@ class ContentBulkForm extends NodeBulkForm {
             '@entity_type_label' => $entity->getEntityType()->getLabel(),
             '%entity_label' => $entity->label(),
           ]), 'error');
-        continue;
+          continue;
         }
 
         $count++;

@@ -60,7 +60,6 @@ class ExportContent extends ActionBase implements ContainerFactoryPluginInterfac
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   Current user.
    */
-
   public function __construct(array $configuration, $plugin_id, $plugin_definition, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user) {
     $this->currentUser = $current_user;
     $this->tempStore = $temp_store_factory;
