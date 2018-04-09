@@ -1,5 +1,5 @@
 api = 2
-core = 8.x
+core = 8.5.1
 projects[drupal][type] = core
 projects[drupal][version] = 8.4.6
 projects[drupal][patch][] = "https://www.drupal.org/files/issues/color-optional-html-preview-2844190-2.patch"
