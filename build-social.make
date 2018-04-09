@@ -1,4 +1,4 @@
-core = 8.x
+core = 8.5.x
 api = 2
 includes[] = drupal-org-core.make
 includes[] = drupal-org.make
